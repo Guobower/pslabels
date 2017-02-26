@@ -1,0 +1,90 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="wizard_form_view">
+      <field name="name">wizard.form</field>
+      <field name="model">pslabels.wizard</field>
+      <field name="arch" type="xml">
+        <form string="Imprimir etiquetas adhesivas">
+          <group>
+            <field name="product_template_id" readonly="1"/>
+            <field name="to_skip"/>
+            <field name="product_quantities">
+              <tree editable="top" create="0" delete="0">
+                <field name="product_id" readonly="1" />
+                <field name="quantity" />
+              </tree>
+            </field>
+          </group>
+          <footer>
+            <button name="print_labels" type="object"
+                    string="Imprimir" class="oe_highlight"/>
+            <button special="cancel" string="Cancelar"/>
+          </footer>
+        </form>
+      </field>
+    </record>
+
+    <act_window id="launch_print_wizard"
+                name="Imprimir etiquetas"
+                src_model="product.template"
+                res_model="pslabels.wizard"
+                view_mode="form"
+                target="new"
+                key2="client_action_multi"/>
+    <!-- explicit list view definition -->
+    <!--
+        <record model="ir.ui.view" id="pslabels.list">
+        <field name="name">pslabels list</field>
+        <field name="model">pslabels.pslabels</field>
+        <field name="arch" type="xml">
+        <tree>
+        <field name="name"/>
+        <field name="value"/>
+        <field name="value2"/>
+        </tree>
+        </field>
+        </record>
+    -->
+
+    <!-- actions opening views on models -->
+    <!--
+        <record model="ir.actions.act_window" id="pslabels.action_window">
+        <field name="name">pslabels window</field>
+        <field name="res_model">pslabels.pslabels</field>
+        <field name="view_mode">tree,form</field>
+        </record>
+    -->
+
+    <!-- server action to the one above -->
+    <!--
+        <record model="ir.actions.server" id="pslabels.action_server">
+        <field name="name">pslabels server</field>
+        <field name="model_id" ref="model_pslabels_pslabels"/>
+        <field name="code">
+        action = {
+        "type": "ir.actions.act_window",
+        "view_mode": "tree,form",
+        "res_model": self._name,
+        }
+        </field>
+        </record>
+    -->
+
+    <!-- Top menu item -->
+    <!--
+        <menuitem name="pslabels" id="pslabels.menu_root"/>
+    -->
+    <!-- menu categories -->
+    <!--
+        <menuitem name="Menu 1" id="pslabels.menu_1" parent="pslabels.menu_root"/>
+        <menuitem name="Menu 2" id="pslabels.menu_2" parent="pslabels.menu_root"/>
+    -->
+    <!-- actions -->
+    <!--
+        <menuitem name="List" id="pslabels.menu_1_list" parent="pslabels.menu_1"
+        action="pslabels.action_window"/>
+        <menuitem name="Server to list" id="pslabels" parent="pslabels.menu_2"
+        action="pslabels.action_server"/>
+    -->
+  </data>
+</odoo>

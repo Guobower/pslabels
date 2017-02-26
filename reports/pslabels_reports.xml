@@ -1,0 +1,70 @@
+<odoo>
+  <data>
+    <report
+        id="report_pslabels"
+        model="product.template"
+        string="Etiquetas adhesivas"
+        name="pslabels.report_pslabels_view"
+        file="pslabels.report_pslabels"
+        report_type="qweb-pdf" />
+
+    <template id="report_pslabels_view">
+      <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="doc">
+          <div class="page" style="padding: 0; border: 0;">
+            <t t-foreach="doc.product_variant_ids" t-as="variant">
+              <t t-call="pslabels.report_pslabels_label">
+                <t t-set="product" t-value="variant">
+                </t>
+              </t>
+              <t t-call="pslabels.report_pslabels_label">
+                <t t-set="product" t-value="variant">
+                </t>
+              </t>
+            </t>
+          </div>
+        </t>
+      </t>
+    </template>
+
+    <report
+        id="report_pslabels2"
+        model="product.template"
+        string="Etiquetas adhesivas 2"
+        name="pslabels.report_pslabels_view2"
+        file="pslabels.report_pslabels"
+        report_type="qweb-pdf" />
+
+    <template id="report_pslabels_view2">
+      <t t-call="report.html_container">
+        <div class="page" style="padding: 0; border: 0;">
+          <span t-esc="data['texto']" />
+          <t t-foreach="data['form']['product_template_id'].product_variant_ids" t-as="variant">
+            <t t-call="pslabels.report_pslabels_label">
+              <t t-set="product" t-value="variant">
+              </t>
+            </t>
+          </t>
+        </div>
+      </t>
+    </template>
+
+    <template id="report_pslabels_label">
+      <div class="col-xs-4" style="padding: 0mm 0 0 0; border: 0; margin: 0; height: 42.3mm;">
+        <div class="row">
+          <div class="col-xs-12" style="text-align: center;">
+            <span style="padding: 2mm 0 0 0; border: 0; margin: 0;">Pies Sucios <strong style="font-size: large;" t-field="product.name"/></span>
+          </div>
+          <div class="col-xs-12" style="text-align: center;">
+            <small t-foreach="product.attribute_value_ids" t-as="attr"
+                   style="padding: 2mm 0 0 0; border: 0; margin: 0;"
+                   t-esc="'%s: %s ' % (attr.attribute_id.name[:1], attr.name)" />
+          </div>
+          <div class="col-xs-12" style="text-align: center">
+            <img t-if="product.barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('EAN13', product.barcode, 1000, 440)" style="width: 50mm; height: 22mm"/>
+          </div>
+        </div>
+      </div>
+    </template>
+  </data>
+</odoo>
