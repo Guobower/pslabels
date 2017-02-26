@@ -1,2 +1,2 @@
 # pslabels
-Odoo addon to print EAN13 labels
+Odoo 10 addon to print EAN13 labels
