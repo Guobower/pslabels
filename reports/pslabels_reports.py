@@ -13,10 +13,12 @@ class PSLabelsReport(models.AbstractModel):
         product_qty_lists = map(lambda p: [self.env['product.product'].browse(p['product_id'])] * p['qty'], data['product_qty_pairs'])
         products = ([{}] * data['to_skip']) + reduce(list.__add__, product_qty_lists)
         pages = (products[i:i+self.labels_per_page] for i in xrange(0, len(products), self.labels_per_page))
+        pre_product_name = data['pre_product_name']
 
         docargs = {
             'doc_ids': docids,
             'doc_model': 'product.template',
             'docs': pages,
+            'pre_product_name': pre_product_name
         }
         return self.env['report'].render('pslabels.report_pslabels_view', docargs)

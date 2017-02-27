@@ -34,7 +34,8 @@
         <div class="col-xs-4" style="padding: 0mm 0 0 0; border: 0; margin: 0; height: 42.3mm;">
           <div t-if="product" class="row">
             <div class="col-xs-12" style="text-align: center;">
-              <span style="padding: 2mm 0 0 0; border: 0; margin: 0;">Pies Sucios <strong style="font-size: large;" t-field="product.name"/></span>
+              <span style="padding: 2mm 0 0 0; border: 0; margin: 0;" t-esc="pre_product_name" />
+              <strong style="font-size: large;" t-field="product.name"/>
             </div>
             <div class="col-xs-12" style="text-align: center;">
               <small t-foreach="product.attribute_value_ids" t-as="attr"
