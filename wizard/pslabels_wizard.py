@@ -28,30 +28,13 @@ class Wizard(models.TransientModel):
         product_quantities = []
         for product in product_template_id.product_variant_ids:
             product_quantities.append((0, 0, {'product_id': product.id, 'quantity': product.incoming_qty, }))
-            res.update({'product_quantities': product_quantities})
+        res.update({'product_quantities': product_quantities})
         return res
 
 
     @api.multi
     def print_labels(self):
-        datas = {'ids': self.env.context.get('active_ids', [])}
         res = self.read(['product_template_id', 'to_skip', 'product_quantities'])
-        res = res and res[0] or {}
-        res['product_template_id'] = res['product_template_id'][0]
-        res['texto'] = 'hola';
-        datas['form'] = res
-        return self.env['report'].get_action([], 'pslabels.report_pslabels_view2', data=datas)
-    # def print_labels(self):
-    #     value =  {
-    #         'type': 'ir.actions.report.xml',
-    #         'report_name':'pslabels.report_pslabels_view',
-    #         'datas': {
-    #             'model':'product.template',
-    #             'id': self.product_template_id.id,
-    #             # 'id': ids and ids[0] or False,
-    #             # 'ids': ids and ids or [],
-    #             'report_type': 'pdf'
-    #         },
-    #         'nodestroy': True
-    #     }
-    #     return value
+        product_qty_pairs = map(lambda p: {'product_id': p.product_id.id, 'qty': p.quantity}, self.product_quantities)
+        datas = {'ids': self.env.context.get('active_ids', []), 'product_template_id': res[0]['product_template_id'][0], 'to_skip': res[0]['to_skip'], 'product_qty_pairs': product_qty_pairs}
+        return self.env['report'].get_action([], 'pslabels.report_pslabels_view', data=datas)
