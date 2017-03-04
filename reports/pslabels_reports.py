@@ -2,17 +2,20 @@
 
 from openerp import models, fields, api
 
-class PSLabelsReport(models.AbstractModel):
-    _name = "report.pslabels.report_pslabels_view"
+class PSLabelsReport1(models.AbstractModel):
+    _name = "report.pslabels.report_pslabels_7024"
 
     labels_per_page = 18
+    template_name = 'pslabels.report_pslabels_view_7024'
+
     @api.model
     def render_html(self, docids, data=None):
         data = data if data is not None else {}
         docids = data.get('ids')
+
         product_qty_lists = map(lambda p: [self.env['product.product'].browse(p['product_id'])] * p['qty'], data['product_qty_pairs'])
         products = ([{}] * data['to_skip']) + reduce(list.__add__, product_qty_lists)
-        pages = (products[i:i+self.labels_per_page] for i in xrange(0, len(products), self.labels_per_page))
+        pages = (products[i:i + self.labels_per_page] for i in xrange(0, len(products), self.labels_per_page))
         pre_product_name = data['pre_product_name']
 
         docargs = {
@@ -21,4 +24,29 @@ class PSLabelsReport(models.AbstractModel):
             'docs': pages,
             'pre_product_name': pre_product_name
         }
-        return self.env['report'].render('pslabels.report_pslabels_view', docargs)
+        return self.env['report'].render(self.template_name, docargs)
+
+
+class PSLabelsReport2(models.AbstractModel):
+    _name = "report.pslabels.report_pslabels_10574"
+
+    labels_per_page = 8
+    template_name = 'pslabels.report_pslabels_view_10574'
+
+    @api.model
+    def render_html(self, docids, data=None):
+        data = data if data is not None else {}
+        docids = data.get('ids')
+
+        product_qty_lists = map(lambda p: [self.env['product.product'].browse(p['product_id'])] * p['qty'], data['product_qty_pairs'])
+        products = ([{}] * data['to_skip']) + reduce(list.__add__, product_qty_lists)
+        pages = (products[i:i + self.labels_per_page] for i in xrange(0, len(products), self.labels_per_page))
+        pre_product_name = data['pre_product_name']
+
+        docargs = {
+            'doc_ids': docids,
+            'doc_model': 'product.template',
+            'docs': pages,
+            'pre_product_name': pre_product_name
+        }
+        return self.env['report'].render(self.template_name, docargs)

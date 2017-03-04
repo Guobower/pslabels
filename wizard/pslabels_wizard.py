@@ -17,6 +17,8 @@ class Wizard(models.TransientModel):
 
     product_template_id = fields.Many2one('product.template', string="Producto", required=True, default=_default_product_template)
 
+    label_type = fields.Selection([('pslabels.report_pslabels_7024', '70x42.3mm'), ('pslabels.report_pslabels_10574', '105x74mm')], string="Tipo de etiqueta")
+
     pre_product_name = fields.Char(string="Prefijo nombre produco", help="Corresponde con el parámetro de sistema 'pslabels_pre_product_name'")
 
     to_skip = fields.Integer(string="Saltar etiquetas:", default=0)
@@ -33,7 +35,7 @@ class Wizard(models.TransientModel):
 
         conf = self.env['ir.config_parameter']
         pre_product_name = conf.get_param('pslabels_pre_product_name')
-        res.update({'product_quantities': product_quantities, 'pre_product_name': pre_product_name})
+        res.update({'product_quantities': product_quantities, 'pre_product_name': pre_product_name, 'label_type': 'pslabels.report_pslabels_7024'})
         return res
 
 
@@ -42,7 +44,8 @@ class Wizard(models.TransientModel):
         product_qty_pairs = map(lambda p: {'product_id': p.product_id.id, 'qty': p.quantity}, self.product_quantities)
         datas = {'ids': self.env.context.get('active_ids', []),
                  'product_template_id': self.product_template_id[0].id,
+                 'label_type': self.label_type,
                  'pre_product_name': self.pre_product_name,
                  'to_skip': self.to_skip,
                  'product_qty_pairs': product_qty_pairs}
-        return self.env['report'].get_action([], 'pslabels.report_pslabels_view', data=datas)
+        return self.env['report'].get_action([], self.label_type, data=datas)
