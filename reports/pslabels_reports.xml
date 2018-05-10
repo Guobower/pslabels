@@ -15,7 +15,7 @@
         <t t-foreach="docs" t-as="page">
           <div class="page" style="padding: 0; border: 0;">
             <!-- Skip first line of labels due to printer margins -->
-            <div class="col-xs-12" style="padding: 0mm 0 0 0; border: 0; margin: 0; height: 38mm;">
+            <div class="col-xs-12" style="padding: 0mm 0 0 0; border: 0; margin: 0; height: 44mm;">
             </div>
             <t t-foreach="page" t-as="doc">
               <t t-call="pslabels.report_pslabels_label_7024">
