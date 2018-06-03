@@ -13,9 +13,9 @@
     <template id="report_pslabels_view_7024">
       <t t-call="report.html_container">
         <t t-foreach="docs" t-as="page">
-          <div class="page" style="padding: 0; border: 0;">
+          <div class="page" style="padding: 0mm; margin: 0mm;; border: 0;">
             <!-- Skip first line of labels due to printer margins -->
-            <div class="col-xs-12" style="padding: 0mm 0 0 0; border: 0; margin: 0; height: 44mm;">
+            <div class="col-xs-12" style="padding: 0mm; border: 0; margin: 0mm; height: 42mm;">
             </div>
             <t t-foreach="page" t-as="doc">
               <t t-call="pslabels.report_pslabels_label_7024">
@@ -31,21 +31,31 @@
     </template>
 
     <template id="report_pslabels_label_7024">
-      <div class="col-xs-4" style="padding: 0; border: 0; margin: 0; height: 41.5mm;">
-        <div t-if="product" class="row">
-          <div class="col-xs-11" style="text-align: center;">
-            <span t-att-style="product.exp_color" />
-            <span style="font-size: small; padding: 2mm 0 0 0; border: 0; margin: 0;" t-esc="pre_product_name" />
-            <strong style="font-size: large;"
-                    t-esc="'%s %s' % (product.name, product.exp_size)"/>
+      <div class="col-xs-4" style="padding: 0mm; margin: 0mm; height: 41mm;">
+        <div class="col-xs-12" style="height: 2mm" />
+        <div t-if="product" class="row" style="height: 16mm;">
+          <div class="col-xs-1" style="text-align: center; overflow: visible; color: white; padding: 0mm 0mm 0mm 8mm; margin: 0mm;">
+            <span t-att-style="product.exp_color" t-esc="'%s' % (product.exp_size)" />
           </div>
-          <div class="col-xs-12" style="text-align: center;">
-            <small style="padding: 2mm 0 0 0; border: 0; margin: 0;"
-                   t-esc="'%s' % (product.exp_style)" />
+          <div class="col-xs-10" style="text-align: center; padding: 1mm 0mm 0mm 0mm; margin: 0;">
+            <div class="row" style="text-align: center; padding: 0mm;">
+              <div class="col-xs-12" style="text-align: center; padding: 0mm; margin: 0mm;">
+                <!-- <span style="font-size: small; padding: 2mm 0 0 0; border: 0; margin: 0;" t-esc="pre_product_name" /> -->
+                <!-- <strong style="font-size: large;" -->
+                <!--         t-esc="'%s - T%s' % (product.name, product.exp_size)"/> -->
+                <strong style="font-size: large;"
+                        t-esc="'%s' % (product.name)"/>
+              </div>
+              <!-- <div class="col-xs-12" style="text-align: center;"> -->
+              <!--   <small style="padding: 2mm 0 0 0; border: 0; margin: 0;" -->
+              <!--          t-esc="'%s' % (product.exp_style)" /> -->
+              <!-- </div> -->
+            </div>
           </div>
-          <div class="col-xs-12" style="text-align: center">
-            <img t-if="product.barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('EAN13', product.barcode, 1000, 440)" style="width: 50mm; height: 22mm"/>
-          </div>
+        </div>
+        <div class="col-xs-12" style="height: 2mm" />
+        <div t-if="product" class="col-xs-12" style="text-align: center; margin: 0mm; padding: 0mm;">
+          <img t-if="product.barcode" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s&amp;humanreadable=1' % ('EAN13', product.barcode, 1000, 440)" style="width: 50mm; height: 22mm;"/>
         </div>
       </div>
     </template>
@@ -80,7 +90,7 @@
     <template id="report_pslabels_label_10574">
       <div class="col-xs-3" style="padding: 0; border: 0; margin: 0; height: 101mm;">
         <div class="col-xs-12" style="text-align: center">
-            <img t-att-src="'/pslabels/static/logo.png'" style="width: 50mm; height: 50mm"/>
+          <img t-att-src="'/pslabels/static/logo.png'" style="width: 50mm; height: 50mm"/>
         </div>
         <div t-if="product" class="row">
           <div class="col-xs-12" style="text-align: center;">
